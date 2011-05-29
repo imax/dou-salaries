@@ -5,8 +5,13 @@ dd$exp <- as.numeric(as.character(dd$Общий.опыт.работы))
 dd[dd$Общий.опыт.работы == "10 и более лет",c("exp")] <- 10
 dd[dd$Общий.опыт.работы == "меньше 3 месяцев",c("exp")] <- 0
 
+# сокращаем "Днепропетровск" до "Днепр.", для графиков
+dd$Город <- as.character(dd$Город)
+dd[dd$Город == "Днепропетровск",c("Город")] <- "Днепр."
+dd$Город <- factor(dd$Город)
+
 dd$title <- substr(dd$Должность, 1, 20) # Укорачиваем для графиков
-top_cities <- c("Киев", "Харьков", "Львов", "Днепропетровск", "Одесса", "other")
+top_cities <- c("Киев", "Харьков", "Львов", "Днепр.", "other")
 dd$loc <- sapply(dd$Город, function(city) { factor(if (city %in% top_cities) substr(city, 1, 9) else "other", levels=top_cities) })
 
 # переводим все зарплаты в доллары
@@ -65,10 +70,11 @@ xyplot(dd$salary[dd$cls=="DEV" & dd$Язык.программирования ==
 ## QA
 qa <- dd[dd$cls == "QA", c("salary", "loc", "exp", 
 	"Доп..специализация", "Возраст", "Индустрия", "Уровень.английского")]
-c2 <- mean(qa$salary)+2*sd(qa$salary)
-qa <- qa[!qa$salary > c2,]
+qa <- qa[!qa$salary > mean(qa$salary)+2*sd(qa$salary),]
 summary(qa$salary)
-bwplot(qa$salary ~ qa$loc, ylab="salary (net), USD", main="QA salaries, Ukraine", varwidth=TRUE)
+quantile(qa$salary, probs=c(.1, .25, .5, .75, .9))
+# hist(qa$salary, main="sample frequency distribution for QA", xlab="salary (net), USD")
+bwplot(qa$salary ~ qa$loc, ylab="salary (net), USD", main="QA salaries by city", varwidth=TRUE)
 bwplot(qa$salary ~ qa$Уровень.английского, ylab="salary (net), USD", main="QA salaries by English skills", varwidth=TRUE)
 xyplot(qa$salary ~ qa$Возраст, ylab="salary (net), USD", main="QA salaries by age", varwidth=TRUE)
 xyplot(qa$salary ~ qa$exp, ylab="salary (net), USD", xlab="experience, years", main="QA salaries by years of experience")
