@@ -7,14 +7,14 @@ dd[dd$Общий.опыт.работы == "меньше 3 месяцев",c("exp
 
 dd$title <- substr(dd$Должность, 1, 20) # Укорачиваем для графиков
 top_cities <- c("Киев", "Харьков", "Львов", "Днепропетровск", "Одесса", "other")
-dd$loc <- sapply(dd$Город, function(city) { factor(if (city %in% top_cities) substr(city, 1, 9 else "other", levels=top_cities) })
+dd$loc <- sapply(dd$Город, function(city) { factor(if (city %in% top_cities) substr(city, 1, 9) else "other", levels=top_cities) })
 
 # переводим все зарплаты в доллары
 dd$salary <- dd$Средняя.зарплата.в.месяц
 
 # пытаемся убрать ошибки пользователей с неправильной валютой
 dd[dd$salary > 5000 & dd$Возраст<26,c("Валюта")] <- "h"
-dds[dd$Средняя.зарплата.в.месяц <2500 & dd$Валюта == "h",c("Валюта")] <- "d"
+dd[dd$Средняя.зарплата.в.месяц <2500 & dd$Валюта == "h",c("Валюта")] <- "d"
 
 # dd[dd$salary > 4000,c("Валюта", "salary", "exp", "loc", "title")]
 dd$salary[dd$Валюта == "h"] <- dd$Средняя.зарплата.в.месяц[dd$Валюта == "h"] / 8.0
