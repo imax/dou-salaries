@@ -12,9 +12,9 @@ dd$loc <- factor(dd$loc,
   levels=c("Киев", "Львов", "Харьков", "Днепр.", "other"),
   labels=c("Киев", "Львов", "Харьков", "Днепропетровск", "остальные города"))
 
-dd$salaryJitter <- dd$salary  + runif(length(dd$salary ),  50, 50)
+dd$salaryJitter <- dd$salary  + runif(length(dd$salary ), -50, 50)
 dd$expJitter    <- dd$exp     + runif(length(dd$exp    ), -.3, .3)
-dd$ageJitter    <- dd$Возраст + runif(length(dd$Возраст), -.3, .3)
+dd$ageJitter    <- dd$Возраст + runif(length(dd$Возраст), -.5, .5)
 
 ################################################################
 
