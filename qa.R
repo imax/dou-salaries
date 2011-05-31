@@ -2,6 +2,9 @@
 
 dd <- read.csv("data/2011_may_final.csv")
 
+dd$loc <- factor(dd$loc,
+  levels=c("Киев", "Львов", "Харьков", "Днепр.", "other"))
+
 qa <- dd[dd$cls == "QA", c("salary", "loc", "exp",
            "Доп..специализация", "Возраст", "Индустрия",
            "Уровень.английского")]
