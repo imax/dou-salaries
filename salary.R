@@ -21,7 +21,7 @@ dd$ageJitter    <- dd$Возраст + runif(length(dd$Возраст), -.5, .5)
 library(lattice)
 
 png(filename="reports/may2011/salary.%03d.png",
-    width=1024, height=1024, res=100)
+    width=1024, height=1024, res=90)
 
 panel.scatter.loess <- function(x,y) {
   panel.xyplot(x, y, alpha=0.4, pch=20)
