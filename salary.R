@@ -25,7 +25,7 @@ png(filename="reports/may2011/salary.%03d.png",
 
 panel.scatter.loess <- function(x,y) {
   panel.xyplot(x, y, alpha=0.4, pch=20)
-  panel.loess(x, y, col="brown")
+  panel.loess(x, y, col="brown", lwd=2, alpha=0.7)
 }
 
 xyplot(salaryJitter ~ expJitter | cls + loc, data=dd,
