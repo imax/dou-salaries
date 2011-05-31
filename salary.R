@@ -38,5 +38,14 @@ xyplot(salaryJitter ~ ageJitter | cls + loc, data=dd,
        panel=panel.scatter.loess,
        xlab="Возраст, лет", ylab="Зарплата, $/мес")
 
+png(filename="reports/may2011/salary-curve.%03d.png",
+    width=1024, height=320, res=90)
+
+xyplot(salary ~ Возраст | loc, groups=cls, data=dd,
+       layout=c(5,1), auto.key=list(columns=3),
+       xlim=c(19, 45), ylim=c(0,3500),
+       panel=panel.superpose, panel.groups=panel.loess,
+       xlab="Возраст, лет", ylab="Зарплата, $/мес")
+
 invisible(dev.off())
 
