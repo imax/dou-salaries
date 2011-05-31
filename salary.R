@@ -43,8 +43,14 @@ png(filename="reports/may2011/salary-curve.%03d.png",
 
 xyplot(salary ~ Возраст | loc, groups=cls, data=dd,
        layout=c(5,1), auto.key=list(columns=3),
-       xlim=c(19, 45), ylim=c(0,3500),
        panel=panel.superpose, panel.groups=panel.loess,
+       xlim=c(19, 45), ylim=c(0,3500),
+       xlab="Возраст, лет", ylab="Зарплата, $/мес")
+
+xyplot(salary ~ Возраст | cls, groups=loc, data=dd,
+       panel=panel.superpose, panel.groups=panel.loess,
+       layout=c(3,1), auto.key=list(columns=5), lwd=2, alpha=0.8,
+       xlim=c(19, 41), ylim=c(400,3500),
        xlab="Возраст, лет", ylab="Зарплата, $/мес")
 
 invisible(dev.off())
