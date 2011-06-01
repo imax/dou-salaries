@@ -37,5 +37,17 @@ bwplot(salary ~ browser | cls, data=dd,
        layout=c(3,1), ylim=c(0,5000),
        xlab="Browser", ylab="Зарплата, $/мес")
 
+png(filename="reports/may2011/reading-hours.%03d.png",
+    width=800, height=400, res=90)
+
+dd$hour <- as.numeric(substr(as.character(dd$Дата.заполнения), 11, 13))
+
+densityplot(~ hour, groups=cls, data=dd,
+            lwd=2, alpha=0.7, pch=20, type="",
+            auto.key=list(columns=1, space="right"),
+            scales=list(x=list(at=do.breaks(c(0, 24), 12))),
+            main="Кто когда читает DOU?",
+            xlab="Время суток (час)")
+
 invisible(dev.off())
 
