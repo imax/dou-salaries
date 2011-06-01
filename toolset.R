@@ -30,10 +30,12 @@ dd <- assignCategory(dd, "browser", dd$User.Agent,
 
 library(lattice)
 
-# png(filename="reports/may2011/toolset.%03d.png",
-#     width=1024, height=1024, res=90)
+png(filename="reports/may2011/toolset.%03d.png",
+    width=1024, height=320, res=90)
 
+bwplot(salary ~ browser | cls, data=dd,
+       layout=c(3,1), ylim=c(0,5000),
+       xlab="Browser", ylab="Зарплата, $/мес")
 
-
-# invisible(dev.off())
+invisible(dev.off())
 
