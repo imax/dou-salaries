@@ -79,3 +79,24 @@ bwplot(qa$salary ~ qa$Уровень.английского, ylab="salary (net),
 xyplot(qa$salary ~ qa$Возраст, ylab="salary (net), USD", main="QA salaries by age", varwidth=TRUE)
 xyplot(qa$salary ~ qa$exp, ylab="salary (net), USD", xlab="experience, years", main="QA salaries by years of experience")
 bwplot(qa$salary ~ qa$Доп..специализация, ylab="salary (net), USD", main="QA salaries by specialization", varwidth=TRUE)
+
+# XXX
+summary(qa$salary[qa$loc!="Львов" & qa$loc!="Харьков" & qa$loc!="Киев"])
+
+# Experience, age, english
+
+# идея: уровень англ - возраст. корреляции нет
+bwplot(dd$Уровень.английского ~ dd$Возраст, varwidth=TRUE)
+
+> summary(pm$salary)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    400    1600    2300    2294    3000    4300 
+> sd(pm$salary)/sqrt(length(pm$salary))
+[1] 56.0636
+
+plot(exp + runif(length(exp), min=-0.25, max=0.25), salary + runif(length(salary), min=-50, max=50), main="PM salaries by years of experience", ylab="salary (net), USD", xlab="work experience, years")
+abline(lm(salary ~ exp, data=pm))
+
+Львов 2350, Киев 2200, Харьков и Днепр 2500, остальные 1600. (медиана)
+
+tt <- read.csv("~/Projects/dou-salaries/data/2010_october_clean.csv")
