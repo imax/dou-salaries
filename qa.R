@@ -1,19 +1,11 @@
 #!/usr/bin/env Rscript
 
-dd <- read.csv("data/2011_may_final.csv")
+source("read.salary.R")
 
-dd$loc <- factor(dd$loc,
-  levels=c("Киев", "Львов", "Харьков", "Днепр.", "other"))
+qa <- read.salary("data/2011_may_final.csv")
 
-qa <- dd[dd$cls == "QA", c("salary", "loc", "exp",
-           "Доп..специализация", "Возраст", "Индустрия",
-           "Уровень.английского")]
-
-qa <- qa[!qa$salary > mean(qa$salary)+2*sd(qa$salary),]
-
-qa$salaryJitter <- qa$salary  + runif(length(qa$salary ),    50,   50)
-qa$expJitter    <- qa$exp     + runif(length(qa$exp    ), -0.25, 0.25)
-qa$ageJitter    <- qa$Возраст + runif(length(qa$Возраст), -0.25, 0.25)
+qa <- qa[qa$cls == "Тестер",]
+qa <- qa[qa$salary <= mean(qa$salary) + 2*sd(qa$salary),]
 
 ################################################################
 
@@ -35,4 +27,5 @@ xyplot(salaryJitter ~ ageJitter | loc, data=qa,
        layout=c(5,1), panel=panel.scatter.loess,
        xlab="Возраст, лет", ylab="Зарплата, $/мес")
 
-dev.off()
+invisible(dev.off())
+

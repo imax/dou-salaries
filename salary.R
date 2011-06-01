@@ -1,22 +1,8 @@
 #!/usr/bin/env Rscript
 
-dd <- read.csv("data/2011_may_final.csv")
+source("read.salary.R")
 
-dd <- dd[dd$cls != "",]
-
-dd$cls <- factor(dd$cls,
-  levels=c("QA", "DEV", "PM"),
-  labels=c("Тестер", "Разработчик", "Менеджер"))
-
-dd$loc <- factor(dd$loc,
-  levels=c("Киев", "Львов", "Харьков", "Днепр.", "other"),
-  labels=c("Киев", "Львов", "Харьков", "Днепропетровск", "остальные города"))
-
-dd$salaryJitter <- dd$salary  + runif(length(dd$salary ), -50, 50)
-dd$expJitter    <- dd$exp     + runif(length(dd$exp    ), -.3, .3)
-dd$ageJitter    <- dd$Возраст + runif(length(dd$Возраст), -.5, .5)
-
-################################################################
+dd <- read.salary("data/2011_may_final.csv")
 
 library(lattice)
 
