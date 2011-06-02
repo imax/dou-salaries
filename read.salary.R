@@ -1,0 +1,30 @@
+
+read.salary <- function(fname="data/2011_may_final.csv") {
+
+  dd <- read.csv(fname)
+
+  dd <- dd[dd$cls != "",]
+
+  dd$cls <- factor(dd$cls,
+    levels=c("QA", "DEV", "PM"),
+    labels=c("Тестер", "Разработчик", "Менеджер"))
+
+  dd$Уровень.английского <- factor(dd$Уровень.английского,
+    levels=c("продвинутый", "выше среднего", "средний",
+      "ниже среднего", "элементарный"))
+
+  dd$loc <- factor(dd$loc,
+    levels=c("Киев", "Львов", "Харьков", "Днепр.", "other"),
+    labels=c("Киев", "Львов", "Харьков", "Днепропетровск", "остальные города"))
+
+  dd$Размер.компании <- factor(dd$Размер.компании,
+    levels=c("до 1000 человек", "до 200 человек",
+      "до 100 человек", "до 50 человек", "до 10 человек"))
+
+  dd$salaryJitter <- dd$salary  + runif(length(dd$salary ), -50, 50)
+  dd$expJitter    <- dd$exp     + runif(length(dd$exp    ), -.3, .3)
+  dd$ageJitter    <- dd$Возраст + runif(length(dd$Возраст), -.5, .5)
+
+  return (dd)
+}
+
