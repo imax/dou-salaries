@@ -7,7 +7,7 @@ read.salary <- function(fname="data/2011_may_final.csv") {
 
   dd$cls <- factor(dd$cls,
     levels=c("QA", "DEV", "PM"),
-    labels=c("Тестер", "Разработчик", "Менеджер"))
+    labels=c("Тестировщик", "Разработчик", "Менеджер"))
 
   dd$Уровень.английского <- factor(dd$Уровень.английского,
     levels=c("продвинутый", "выше среднего", "средний",
