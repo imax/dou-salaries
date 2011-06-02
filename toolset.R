@@ -14,8 +14,6 @@ assignCategory <- function(dd, dst, agent, lvl, regex) {
 
 dd <- read.salary("data/2011_may_final.csv")
 
-dd$User.Agent <- as.character(dd$User.Agent)
-
 dd <- assignCategory(dd, "platform", dd$User.Agent,
   c("Windows", "Linux", "Mac", "Android", "iPhone/iPad"),
   c("Windows NT|WOW64", "(?!Android)Linux", "Macintosh",
@@ -40,11 +38,14 @@ bwplot(salary ~ browser | cls, data=dd,
 png(filename="reports/may2011/reading-hours.%03d.png",
     width=800, height=400, res=90)
 
-dd$hour <- as.numeric(substr(as.character(dd$Дата.заполнения), 11, 13))
+dd$time <- as.numeric(format(dd$Дата.заполнения, "%H")) * 3600 +
+           as.numeric(format(dd$Дата.заполнения, "%M")) * 60 +
+           as.numeric(format(dd$Дата.заполнения, "%S"))
 
-densityplot(~ hour, groups=cls, data=dd, lwd=2, alpha=0.7, type="",
-            auto.key=list(columns=1, space="right"),
-            scales=list(x=list(at=do.breaks(c(0, 24), 12))),
+densityplot(~ time, groups=cls, data=dd, lwd=2, alpha=0.7, type="",
+            auto.key=list(columns=1, space="right"), scales=list(
+              x=list(at=do.breaks(c(0, 24 * 3600), 12), labels=0:12*2)),
+            xlim=c(0, 24 * 3600), n=200,
             main="Кто когда читает DOU?", xlab="Время суток (час)")
 
 invisible(dev.off())

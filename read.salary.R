@@ -7,7 +7,7 @@ read.salary <- function(fname="data/2011_may_final.csv") {
 
   dd$cls <- factor(dd$cls,
     levels=c("QA", "DEV", "PM"),
-    labels=c("Тестер", "Разработчик", "Менеджер"))
+    labels=c("Тестировщик", "Разработчик", "Менеджер"))
 
   dd$Уровень.английского <- factor(dd$Уровень.английского,
     levels=c("продвинутый", "выше среднего", "средний",
@@ -20,6 +20,11 @@ read.salary <- function(fname="data/2011_may_final.csv") {
   dd$Размер.компании <- factor(dd$Размер.компании,
     levels=c("до 1000 человек", "до 200 человек",
       "до 100 человек", "до 50 человек", "до 10 человек"))
+
+  dd$User.Agent <- as.character(dd$User.Agent)
+
+  dd$Дата.заполнения <- strptime(
+    dd$Дата.заполнения, "%d/%m/%Y %H:%M:%S", tz="EET")
 
   dd$salaryJitter <- dd$salary  + runif(length(dd$salary ), -50, 50)
   dd$expJitter    <- dd$exp     + runif(length(dd$exp    ), -.3, .3)
