@@ -5,7 +5,7 @@ source("read.salary.R")
 dd <- read.salary("data/2011_may_final.csv")
 
 library(lattice)
-# library(RColorBrewer)
+library(RColorBrewer)
 
 png(filename="reports/may2011/salary.%03d.png",
     width=1024, height=1024, res=90)
@@ -52,27 +52,47 @@ devel$Предметная.область <- factor(devel$Предметная.�
 png(filename="reports/may2011/salary-curve.dev.%03d.png",
     width=1024, height=600, res=90)
 
-palette <- trellis.par.get("superpose.line")$col # brewer.pal(9, "Set1")
-ltype <- c(rep(1, length(palette)),
-           rep(2, length(levels(devel$Предметная.область)) - length(palette)))
+palette.lty <- function(lvl, colors) {
+  nlevels <- length(levels(lvl))
+  ncolors <- min(nlevels, length(colors))
+  return (list(col=colors[1:ncolors],
+    lty=sort(rep(1:ceiling(nlevels/ncolors), ncolors))[1:nlevels]))
+}
+
+palette <- palette.lty(devel$Предметная.область,
+  trellis.par.get("superpose.line")$col) # brewer.pal(9, "Set1")
 
 xyplot(salary ~ Возраст, groups=Предметная.область, data=devel,
        panel=panel.superpose, panel.groups=panel.loess,
-       lwd=2, alpha=0.9, col=palette, lty=ltype,
+       lwd=2, alpha=0.9, col=palette$col, lty=palette$lty,
        key=list(columns=1, space="right",
-                lines=list(lwd=2, alpha=0.9, col=palette, lty=ltype),
-                text=list(levels(devel$Предметная.область))),
+         lines=list(lwd=2, alpha=0.9, col=palette$col, lty=palette$lty),
+         title="Предметная область",
+         text=list(levels(devel$Предметная.область))),
        xlim=c(19,46), ylim=c(300,2700),
        xlab="Возраст, лет", ylab="Зарплата, $/мес")
 
 xyplot(salary ~ exp, groups=Предметная.область, data=devel,
        panel=panel.superpose, panel.groups=panel.loess,
-       lwd=2, alpha=0.9, col=palette, lty=ltype,
+       lwd=2, alpha=0.9, col=palette$col, lty=palette$lty,
        key=list(columns=1, space="right",
-                lines=list(lwd=2, alpha=0.9, col=palette, lty=ltype),
-                text=list(levels(devel$Предметная.область))),
+         lines=list(lwd=2, alpha=0.9, col=palette$col, lty=palette$lty),
+         title="Предметная область",
+         text=list(levels(devel$Предметная.область))),
        xlim=c(0,10), ylim=c(300,2700),
        xlab="Опыт работы, лет", ylab="Зарплата, $/мес")
+
+palette <- palette.lty(dd$Размер.компании,
+  rev(brewer.pal(length(levels(dd$Размер.компании)), "Greens")))
+
+densityplot(~ exp, groups=Размер.компании, data=dd, type="",
+            lwd=2, alpha=0.9, col=palette$col, lty=palette$lty,
+            key=list(columns=1, space="right",
+              lines=list(lwd=2, alpha=0.9,
+                col=palette$col, lty=palette$lty),
+              title="Размер компании",
+              text=list(levels(dd$Размер.компании))),
+            xlim=c(-1,11), xlab="Опыт работы, лет")
 
 invisible(dev.off())
 
