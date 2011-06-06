@@ -82,17 +82,28 @@ xyplot(salary ~ exp, groups=Предметная.область, data=devel,
        xlim=c(0,10), ylim=c(300,2700),
        xlab="Опыт работы, лет", ylab="Зарплата, $/мес")
 
-palette <- palette.lty(dd$Размер.компании,
-  rev(brewer.pal(length(levels(dd$Размер.компании)), "Greens")))
+xyplot(salary ~ exp2, groups=Предметная.область, data=devel,
+       panel=panel.superpose, panel.groups=panel.loess,
+       lwd=2, alpha=0.9, col=palette$col, lty=palette$lty,
+       key=list(columns=1, space="right",
+         lines=list(lwd=2, alpha=0.9, col=palette$col, lty=palette$lty),
+         title="Предметная область",
+         text=list(levels(devel$Предметная.область))),
+       xlim=c(0,10), ylim=c(900,3100),
+       xlab=expression("Опыт работы на " * bold("текущем") * " месте, лет"),
+       ylab="Зарплата, $/мес")
 
-densityplot(~ exp, groups=Размер.компании, data=dd, type="",
-            lwd=2, alpha=0.9, col=palette$col, lty=palette$lty,
-            key=list(columns=1, space="right",
-              lines=list(lwd=2, alpha=0.9,
-                col=palette$col, lty=palette$lty),
-              title="Размер компании",
-              text=list(levels(dd$Размер.компании))),
-            xlim=c(-1,11), xlab="Опыт работы, лет")
+## palette <- palette.lty(dd$Размер.компании,
+##   rev(brewer.pal(length(levels(dd$Размер.компании)), "Greens")))
+
+## densityplot(~ exp, groups=Размер.компании, data=dd, type="",
+##             lwd=2, alpha=0.9, col=palette$col, lty=palette$lty,
+##             key=list(columns=1, space="right",
+##               lines=list(lwd=2, alpha=0.9,
+##                 col=palette$col, lty=palette$lty),
+##               title="Размер компании",
+##               text=list(levels(dd$Размер.компании))),
+##             xlim=c(-1,11), xlab="Опыт работы, лет")
 
 invisible(dev.off())
 
