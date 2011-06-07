@@ -80,7 +80,8 @@ xyplot(salary ~ exp, groups=Предметная.область, data=devel,
          title="Предметная область",
          text=list(levels(devel$Предметная.область))),
        xlim=c(0,10), ylim=c(300,2700),
-       xlab="Опыт работы, лет", ylab="Зарплата, $/мес")
+       xlab=expression(bold("Общий") * " опыт работы, лет"),
+       ylab="Зарплата, $/мес")
 
 xyplot(salary ~ exp2, groups=Предметная.область, data=devel,
        panel=panel.superpose, panel.groups=panel.loess,
