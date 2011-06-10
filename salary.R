@@ -42,6 +42,22 @@ xyplot(salary ~ Возраст | cls, groups=loc, data=dd,
        xlim=c(19, 41), ylim=c(400,3500),
        xlab="Возраст, лет", ylab="Зарплата, $/мес")
 
+xyplot(salary ~ exp | loc, groups=cls, data=dd,
+       panel=panel.superpose, panel.groups=panel.loess,
+       layout=c(5,1), lwd=2, alpha=0.8,
+       auto.key=list(columns=3, lines=T, points=F),
+       xlim=c(0, 10), ylim=c(0,3500),
+       xlab=expression(bold("Общий") * " опыт работы, лет"),
+       ylab="Зарплата, $/мес")
+
+xyplot(salary ~ exp2 | loc, groups=cls, data=dd,
+       panel=panel.superpose, panel.groups=panel.loess,
+       layout=c(5,1), lwd=2, alpha=0.8,
+       auto.key=list(columns=3, lines=T, points=F),
+       xlim=c(0,10), ylim=c(0,3500),
+       xlab=expression("Опыт работы на " * bold("текущем") * " месте, лет"),
+       ylab="Зарплата, $/мес")
+
 ################################################################
 
 devel <- dd[dd$cls == "Разработчик" & dd$Предметная.область != "",]
