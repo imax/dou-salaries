@@ -99,4 +99,38 @@ abline(lm(salary ~ exp, data=pm))
 
 Львов 2350, Киев 2200, Харьков и Днепр 2500, остальные 1600. (медиана)
 
+devel <- dd[dd$cls == "Разработчик"
+          & dd$Предметная.область != ""
+          & dd$Язык.программирования != "",]
+
+median(devel$salary[devel$loc=="Днепропетровск"])
+
 tt <- read.csv("~/Projects/dou-salaries/data/2010_october_clean.csv")
+# оставляем только разработчиков
+tt <- tt[tt$Специализация!="Project manager" & tt$Специализация != "QA/Testing",]
+tt <- tt[tt$Зарплата.за.последний.месяц != NA,]
+tt <- tt[tt$Зарплата.за.последний.месяц >= 150 & tt$Зарплата.за.последний.месяц < 3501,]
+
+
+png(width=640, filename="dev_cmp%d.png")
+plot(tt$Зарплата.за.последний.месяц ~ tt$Город, ylab="Salary net, USD", xlab="", main="Wages Oct 2010")
+abline(h=1500, col=2)
+boxplot(devel$salary ~ devel$loc, ylim=c(0,3500), ylab="Salary net, USD", xlab="", main="Wages May 2011")
+abline(h=1600, col=2)
+
+dev.off()
+
+png(width=640, filename="dev_title.png")
+bwplot(devel$salary ~ devel$title, ylab="salary (net), USD", main="DEV salaries by title", varwidth=TRUE, ylim=c(0, 4000), scales=list(x=list(rot=45)))
+
+dev.off()
+
+# regions
+
+r <- dd[dd$Город != "Киев" & dd$Город !="Львов" & dd$Город!="Харьков" & dd$Город != "Днепр.",]
+cities <- tapply(r$Город, r$Город, length)
+r <- r[r$Город %in% names(cities)[cities >= 10],]
+r$Город<- factor(r$Город)
+
+# lm.model
+salary.model <- lm(salary ~ Образование + exp + Уровень.английского + Должность + Город + Пол + Язык.программирования + Валюта + Предметная.область + Размер.компании + Возраст)
