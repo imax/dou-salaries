@@ -1,5 +1,5 @@
 
-read.salary <- function(fname="data/2011_may_final.csv") {
+read.salary <- function(fname="data/2011_dec_final.csv") {
 
   dd <- read.csv(fname)
 

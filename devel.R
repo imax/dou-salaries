@@ -3,9 +3,9 @@
 source("read.salary.R")
 
 library(lattice)
-library(RColorBrewer)
+#library(RColorBrewer)
 
-dd <- read.salary("data/2011_may_final.csv")
+dd <- read.salary()
 
 devel <- dd[dd$cls == "Разработчик"
           & dd$Предметная.область != ""
@@ -17,6 +17,10 @@ devel$Предметная.область <- factor(devel$Предметная.�
 devel$Язык.программирования <- factor(devel$Язык.программирования,
   levels=names(sort(summary(devel$Язык.программирования),
     decreasing=T))[1:14])
+
+devel$top7 <- factor(devel$Язык.программирования,
+  levels=names(sort(summary(devel$Язык.программирования),
+    decreasing=T))[1:7])
 
 ################################################################
 
@@ -42,7 +46,7 @@ devel <- setDomain(devel, "domain2", pairlist(
 
 ################################################################
 
-png(filename="reports/may2011/salary-curve.dev.%03d.png",
+png(filename="reports/dec2011/salary-curve.dev.%03d.png",
     width=1024, height=600, res=90)
 
 palette.lty <- function(lvl, colors) {
@@ -94,31 +98,35 @@ xyplot(salary ~ exp2, groups=Предметная.область, data=devel,
 palette <- palette.lty(devel$domain1,
   trellis.par.get("superpose.line")$col)
 
-xyplot(salary ~ Возраст, groups=domain1, data=devel,
+png(filename="reports/dec2011/dev.exp.%03d.png",
+    width=1024, height=600, res=90)
+
+xyplot(salary ~ exp, groups=top7, data=devel,
        panel=panel.superpose, panel.groups=panel.loess,
        lwd=2, alpha=0.9, col=palette$col, lty=palette$lty,
        key=list(columns=1, space="right",
          lines=list(lwd=2, alpha=0.9, col=palette$col, lty=palette$lty),
-         title="Вид прогр.",
-         text=list(levels(devel$domain1))),
-       ylim=c(400,2600), xlim=c(19, 41),
-       xlab="Возраст, лет", ylab="Зарплата, $/мес")
+         text=list(levels(devel$top7))),
+       ylim=c(400,3500), xlim=c(0, 10),
+       xlab="Опыт, лет", ylab="Зарплата, $/мес")
 
-palette <- palette.lty(devel$domain2, brewer.pal(6, "Paired")[3:6])
+#palette <- palette.lty(devel$domain2, brewer.pal(6, "Paired")[3:6])
 
-xyplot(salary ~ Возраст, groups=domain2, data=devel,
+xyplot(salary ~ возраст, groups=domain2, data=devel,
        panel=panel.superpose, panel.groups=panel.loess,
        lwd=2, col=palette$col, lty=palette$lty,
        key=list(columns=1, space="right",
          lines=list(lwd=2, col=palette$col, lty=palette$lty),
-         title="Язык прогр.",
+         title="язык прогр.",
          text=list(levels(devel$domain2))),
        ylim=c(400,2600), xlim=c(19, 41),
-       xlab="Возраст, лет", ylab="Зарплата, $/мес")
+       xlab="возраст, лет", ylab="зарплата, $/мес")
+
+dev.off()
 
 ################################################################
 
-png(filename="reports/may2011/dev.age.%03d.png",
+png(filename="reports/dec2011/dev.age.%03d.png",
     width=1024, height=600, res=90)
 
 densityplot(~ Возраст, groups=domain1, data=devel,
