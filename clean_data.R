@@ -11,7 +11,7 @@ dd$Город <- as.character(dd$Город)
 dd[dd$Город == "Днепропетровск",c("Город")] <- "Днепр."
 dd$Город <- factor(dd$Город)
 
-dd$title <- substr(dd$Должность, 1, 20) # Укорачиваем для графиков
+# dd$title <- substr(dd$Должность, 1, 20) # Укорачиваем для графиков
 top_cities <- c("Киев", "Харьков", "Львов", "Днепр.", "other")
 dd$loc <- sapply(dd$Город, function(city) { factor(if (city %in% top_cities) substr(city, 1, 9) else "other", levels=top_cities) })
 
@@ -25,26 +25,29 @@ dd[dd$Средняя.зарплата.в.месяц <2500 & dd$Валюта == "
 # dd[dd$salary > 4000,c("Валюта", "salary", "exp", "loc", "title")]
 dd$salary[dd$Валюта == "h"] <- dd$Средняя.зарплата.в.месяц[dd$Валюта == "h"] / 8.0
 # убираем подозрительные анкеты с зарплатами меньше $150 
-dd <- dd[!dd$salary<150,]
+dd <- dd[!dd$salary<250,]
 dd <- dd[!dd$salary>7000,]
 
-pm_titles = c("Team lead", "Project manager", 
-	"Senior Project Manager / Program Manager", 	
+pm_titles = c("Team lead", "Project manager")
+spm_titles = c( "Senior Project Manager / Program Manager", 	
 	"Director of Engineering / Program Director")
 dev_titles = c("Junior Software Engineer", "Software Engineer",
-	"Senior Software Engineer", "Technical Lead", "System Architect")
+	"Senior Software Engineer")
+sdev_titles = c("Technical Lead", "System Architect")
 qa_titles = c("Junior QA engineer", "QA engineer",
 	"Senior QA engineer", "QA Tech Lead")
-other_titles = c("DBA / Администратор баз данных",
-"Верстальщик", "Гейм-дизайнер", "Дизайнер",
-"Системный администратор", "Технический писатель")
+adm_titles = c("DBA / Администратор баз данных", "Системный администратор") 
+other_titles = c("Верстальщик", "Гейм-дизайнер", "Дизайнер", "Технический писатель")
 
 
 # классификация дерева должностей по группам
 dd$cls <- ""
 dd[dd$Должность %in% pm_titles, c("cls")] <- "PM"
+dd[dd$Должность %in% spm_titles, c("cls")] <- "SPM"
 dd[dd$Должность %in% dev_titles, c("cls")] <- "DEV"
+dd[dd$Должность %in% sdev_titles, c("cls")] <- "SDEV"
 dd[dd$Должность %in% qa_titles, c("cls")] <- "QA"
+dd[dd$Должность %in% adm_titles, c("cls")] <- "ADM"
 dd$cls <- factor(dd$cls)
 
 dd$Возраст[dd$Возраст<15] <- NA
