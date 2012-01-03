@@ -54,3 +54,5 @@ dd$Возраст[dd$Возраст<15] <- NA
 dd$Возраст[dd$Возраст>65] <- NA
 
 write.table(dd,file="~/Projects/dou-salaries/data/2011_dec_final.csv", sep=",")
+dd_mini <- dd[,c("Город", "salary", "Должность", "exp", "Язык.программирования")]
+write.table(dd_mini,file="~/Projects/dou-salaries/data/2011_dec_mini.csv", sep=",")

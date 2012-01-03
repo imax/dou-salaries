@@ -8,7 +8,6 @@ library(lattice)
 dd <- read.salary()
 
 devel <- dd[dd$cls == "Разработчик"
-          & dd$Предметная.область != ""
           & dd$Язык.программирования != "",]
 
 devel$Предметная.область <- factor(devel$Предметная.область,
