@@ -37,4 +37,3 @@ read.salary <- function(fname="data/2011_dec_final.csv") {
   return (dd)
 }
 
-dd <- read.salary()
