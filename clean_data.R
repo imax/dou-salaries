@@ -1,5 +1,7 @@
 
-dd <- read.csv("data/2011_dec_raw.csv")
+clean.salary.csv <- function(infile, outfile) {
+
+dd <- read.csv(infile)
 
 # чтобы убрать factors сначала преобразуем в строки
 dd$exp <- as.numeric(as.character(dd$Общий.опыт.работы))
@@ -53,6 +55,15 @@ dd$cls <- factor(dd$cls)
 dd$Возраст[dd$Возраст<15] <- NA
 dd$Возраст[dd$Возраст>65] <- NA
 
-write.table(dd,file="~/Projects/dou-salaries/data/2011_dec_final.csv", sep=",")
+write.table(dd, file=outfile, sep=",")
 dd_mini <- dd[,c("Город", "salary", "Должность", "exp", "Язык.программирования")]
-write.table(dd_mini,file="~/Projects/dou-salaries/data/2011_dec_mini.csv", sep=",")
+minifile <- sub("final", "mini", outfile)
+write.table(dd_mini, file=minifile, sep=",")
+}
+
+#outfile <- sub("raw", "final", infile)
+source <- "data/2012_may_raw.csv"
+final <- sub("raw", "final", source)
+mini <- sub("raw", "mini", source)
+
+clean.salary.csv(source, final)
