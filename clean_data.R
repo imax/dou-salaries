@@ -22,8 +22,7 @@ top_cities <- c("Киев", "Харьков", "Львов", "Днепр.", "othe
 dd$loc <- sapply(dd$Город, function(city) { factor(if (city %in% top_cities) substr(city, 1, 9) else "other", levels=top_cities) })
 
 # переводим все зарплаты в доллары
-dd$salary <- 900
-# dd$Зарплата.в.месяц
+dd$salary <- dd$Зарплата.в.месяц
 
 # пытаемся убрать ошибки пользователей с неправильной валютой
 dd[dd$salary > 5000 & dd$Возраст<26,c("Валюта")] <- "h"
@@ -72,7 +71,7 @@ write.table(dd_mini, file=minifile, sep=",")
 }
 
 #outfile <- sub("raw", "final", infile)
-source <- "data/2012_dec_raw.csv"
+source <- "data/2013_may_raw.csv"
 final <- sub("raw", "final", source)
 mini <- sub("raw", "mini", source)
 
