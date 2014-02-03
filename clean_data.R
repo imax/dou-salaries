@@ -18,7 +18,7 @@ dd[dd$Город == "Днепропетровск",c("Город")] <- "Днеп
 dd$Город <- factor(dd$Город)
 
 # dd$title <- substr(dd$Должность, 1, 20) # Укорачиваем для графиков
-top_cities <- c("Киев", "Харьков", "Львов", "Днепр.", "other")
+top_cities <- c("Киев", "Харьков", "Львов", "Днепр.", "Одесса", "Харьков", "other")
 dd$loc <- sapply(dd$Город, function(city) { factor(if (city %in% top_cities) substr(city, 1, 9) else "other", levels=top_cities) })
 
 # переводим все зарплаты в доллары
@@ -65,13 +65,13 @@ dd[dd$Пол == "m", c("Пол")] <- "мужской"
 dd[dd$Пол == "f", c("Пол")] <- "женский"
 
 write.table(dd, file=outfile, sep=",")
-dd_mini <- dd[,c("Город", "Зарплата.в.месяц", "Изменение.зарплаты", "Должность", "exp", "current_job_exp", "Язык.программирования", "Специализация", "Возраст", "Пол", "Образование", "Уровень.английского", "Размер.компании")]
+dd_mini <- dd[,c("Город", "Зарплата.в.месяц", "Изменение.зарплаты", "Должность", "exp", "current_job_exp", "Язык.программирования", "Специализация", "Возраст", "Пол", "Образование", "Уровень.английского", "Размер.компании", "Тип.компании", "Предметная.область")]
 minifile <- sub("final", "mini", outfile)
 write.table(dd_mini, file=minifile, sep=",")
 }
 
 #outfile <- sub("raw", "final", infile)
-source <- "data/2013_may_raw.csv"
+source <- "data/2013_dec_raw.csv"
 final <- sub("raw", "final", source)
 mini <- sub("raw", "mini", source)
 
