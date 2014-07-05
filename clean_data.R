@@ -65,14 +65,16 @@ dd[dd$Пол == "m", c("Пол")] <- "мужской"
 dd[dd$Пол == "f", c("Пол")] <- "женский"
 
 write.table(dd, file=outfile, sep=",")
+
 dd_mini <- dd[,c("Город", "Зарплата.в.месяц", "Изменение.зарплаты", "Должность", "exp", "current_job_exp", "Язык.программирования", "Специализация", "Возраст", "Пол", "Образование", "Еще.студент", "Уровень.английского", "Размер.компании", "Тип.компании", "Предметная.область")]
 minifile <- sub("final", "mini", outfile)
 write.table(dd_mini, file=minifile, sep=",")
 }
 
-#outfile <- sub("raw", "final", infile)
+# outfile <- sub("raw", "final", infile)
 source <- "data/2014_may_raw.csv"
 final <- sub("raw", "final", source)
-mini <- sub("raw", "mini", source)
+# mini <- sub("raw", "mini", source)
 
 clean.salary.csv(source, final)
+# warnings()
