@@ -72,7 +72,7 @@ write.table(dd_mini, file=minifile, sep=",")
 }
 
 # outfile <- sub("raw", "final", infile)
-source <- "data/2014_may_raw.csv"
+source <- "data/2014_dec_raw.csv"
 final <- sub("raw", "final", source)
 # mini <- sub("raw", "mini", source)
 
