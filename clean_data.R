@@ -31,7 +31,7 @@ dd[dd$salary > 5000 & dd$Возраст<26,c("Валюта")] <- "h"
 # dd[dd$salary > 4000,c("Валюта", "salary", "exp", "loc", "title")]
 # dd$salary[dd$Валюта == "h"] <- dd$Зарплата.в.месяц[dd$Валюта == "h"] / 8.0
 # убираем подозрительные анкеты с зарплатами меньше $250
-dd <- dd[!dd$salary<250,]
+dd <- dd[!dd$salary<130,]
 dd <- dd[!dd$salary>7000,]
 
 pm_titles = c("Team lead", "Project manager")
