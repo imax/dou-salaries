@@ -31,8 +31,8 @@ dd[dd$salary > 5000 & dd$Возраст<26,c("Валюта")] <- "h"
 # dd[dd$salary > 4000,c("Валюта", "salary", "exp", "loc", "title")]
 # dd$salary[dd$Валюта == "h"] <- dd$Зарплата.в.месяц[dd$Валюта == "h"] / 8.0
 # убираем подозрительные анкеты с зарплатами меньше $250
-dd <- dd[!dd$salary<130,]
-dd <- dd[!dd$salary>7000,]
+# dd <- dd[!dd$salary<130,]
+# dd <- dd[!dd$salary>7000,]
 
 pm_titles = c("Team lead", "Project manager")
 spm_titles = c( "Senior Project Manager / Program Manager",
@@ -42,7 +42,7 @@ dev_titles = c("Junior Software Engineer", "Software Engineer",
 sdev_titles = c("Technical Lead", "System Architect")
 qa_titles = c("Junior QA engineer", "QA engineer",
 	"Senior QA engineer", "QA Tech Lead")
-adm_titles = c("DBA / Администратор баз данных", "Системный администратор")
+adm_titles = c("DBA / Администратор баз данных", "Системный администратор", "DevOps")
 other_titles = c("Верстальщик", "Гейм-дизайнер", "Дизайнер", "Технический писатель")
 
 
