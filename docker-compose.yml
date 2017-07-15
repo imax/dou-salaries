@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  rlang:
+    image: r-base
+    command: Rscript /data/clean_data.R
+    volumes:
+      - ./:/data
