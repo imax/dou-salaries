@@ -19,7 +19,7 @@ dd$Город <- factor(dd$Город)
 
 # dd$title <- substr(dd$Должность, 1, 20) # Укорачиваем для графиков
 top_cities <- c("Киев", "Харьков", "Львов", "Днепр.", "Одесса", "Харьков", "other")
-dd$loc <- sapply(dd$Город, function(city) { factor(if (city %in% top_cities) substr(city, 1, 9) else "other", levels=top_cities) })
+# dd$loc <- sapply(dd$Город, function(city) { factor(if (city %in% top_cities) substr(city, 1, 9) else "other", levels=top_cities) })
 
 # переводим все зарплаты в доллары
 dd$salary <- dd$Зарплата.в.месяц
@@ -72,7 +72,7 @@ write.table(dd_mini, file=minifile, sep=",")
 }
 
 # outfile <- sub("raw", "final", infile)
-source <- "data/2016_dec_raw.csv"
+source <- "/data/data/2017_june_raw.csv"
 final <- sub("raw", "final", source)
 # mini <- sub("raw", "mini", source)
 
