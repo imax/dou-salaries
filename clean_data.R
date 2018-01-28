@@ -57,7 +57,7 @@ dd[dd$Должность %in% adm_titles, c("cls")] <- "ADM"
 dd$cls <- factor(dd$cls)
 
 dd$Возраст[dd$Возраст<15] <- 0
-dd$Возраст[dd$Возраст>65] <- 0
+# dd$Возраст[dd$Возраст>65] <- 0
 dd$Возраст[!dd$Возраст] <- 0
 
 dd$Пол <- as.character(dd$Пол)
